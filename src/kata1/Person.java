@@ -1,25 +1,32 @@
-package kata1;
+package kata1v2;
 
-import java.util.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class Person {
-    private String name;
-    private Date birthday;
+    private final String name;
+    private final Calendar birthdate;
+    private static final long MILLISECONDS_PER_YEAR = (long) (365.25 * 24 * 60 * 60 * 1000);
 
-    public Person(String name, Date birthday) {
+    public Person(String name, Calendar birthdate) {
         this.name = name;
-        this.birthday = birthday;
+        this.birthdate = birthdate;
     }
     
     public String getName() {
         return name;
     }
 
-    public Date getBirthday() {
-        return birthday;
+    public Calendar getBirthdate() {
+        return birthdate;
     }
     
     public int getAge(){
-        return (int)((new Date.getTime() - birthday.getTime())/31536000000L);
+        Calendar today = GregorianCalendar.getInstance();
+        return (int) (milliSecondsToYear(today.getTimeInMillis() - birthdate.getTimeInMillis()));
+    }
+    
+    private long milliSecondsToYear(long milles){
+        return milles / MILLISECONDS_PER_YEAR;
     }
 }
